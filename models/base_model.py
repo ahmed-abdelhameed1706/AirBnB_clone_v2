@@ -45,11 +45,9 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        dictionary = {'__class__':
-                  (str(type(self)).split('.')[-1]).split('\'')[0]}
-        for key, value in self.__dict__.items():
-            if key in ('created_at', 'updated_at'):
-                dictionary[key] = value.isoformat()
-        else:
-            dictionary[key] = value
-        return dictionary
+        dictionary = {}
+        dictionary.update(self.__dict__)
+        dictionary.update({'__class__':
+                        (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dictionary['created_at'] = self.created_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.isoformat()

@@ -53,7 +53,7 @@ class Place(BaseModel, Base):
             return reviews_list
 
         @property
-        def amenities(self):
+        def amenities_prop(self):
             """
             getter for the aminites
             """
@@ -66,8 +66,8 @@ class Place(BaseModel, Base):
                     amenities_list.append(amenity)
             return amenities_list
 
-        @amenities.setter
-        def amenities(self, obj):
+        @amenities_prop.setter
+        def amenities_prop(self, obj):
             """
             setter for the amenintes
             """

@@ -31,14 +31,13 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
+    reviews = relationship(
+        'Review', backref='place', cascade='all, delete')
+    amenities = relationship(
+            'Amenity', secondary=place_amenity,
+            viewonly=False)
     
-    if db_type == 'db':
-        reviews = relationship(
-            'Review', backref='place', cascade='all, delete')
-        amenities = relationship(
-                'Amenity', secondary=place_amenity,
-                viewonly=False)
-    else:
+    if db_type != 'db':
         @property
         def reviews(self):
             """
@@ -58,7 +57,14 @@ class Place(BaseModel, Base):
             """
             getter for the aminites
             """
-            return self.amenity_ids
+            from models import storage
+            from models.amenity import Amenity
+            amenities_list = []
+            _amenities = storage.all(Amenity).values()
+            for amenity in _amenities:
+                if amenity.id in self.amenity_ids:
+                    amenities_list.append(amenity)
+            return amenities_list
 
         @amenities.setter
         def amenities(self, obj):

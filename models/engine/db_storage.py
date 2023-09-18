@@ -25,7 +25,6 @@ class DBStorage:
     """
     __engine = None
     __session = None
-    classes = [City, Review, User, Amenity, State, Place]
     
     def __init__(self):
         """
@@ -42,13 +41,16 @@ class DBStorage:
         query on the current database session
         """
         new_dict = {}
-        if cls in None:
-            for clss in self.classes:
+        classes = [City, Review, User, Amenity, State, Place]
+        if cls is None:
+            for clss in classes:
+                
                 objs = self.__session.query(clss).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        elif cls in self.classes:
+        elif cls in classes:
+            
             objs = self.__session.query(cls).all()
             for obj in objs:
                 key = obj.__class__.__name__ + '.' + obj.id

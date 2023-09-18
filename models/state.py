@@ -3,7 +3,9 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import String, Column
 from sqlalchemy.orm import relationship
-class State(BaseModel):
+from models.city import City
+
+class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
     

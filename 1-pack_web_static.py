@@ -16,7 +16,7 @@ def do_pack():
     filename = f"web_static_{time}.tgz"
     local("sudo mkdir -p versions")
     archive_path = local(f"sudo tar -cvzf versions/{filename} web_static")
-    
+
     if archive_path:
         return archive_path
     else:

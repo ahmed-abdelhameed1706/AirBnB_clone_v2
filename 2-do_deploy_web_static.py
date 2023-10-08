@@ -27,9 +27,11 @@ def do_deploy(archive_path):
 
         archive_folder = f"/data/web_static/releases/{filename.split('.')[0]}"
 
-        run(f"sudo mkdir -p {archive_folder}")
+        run(f"sudo rm -rf {archive_folder}/")
 
-        run(f"sudo tar -xzf /tmp/{filename} -C {archive_folder}")
+        run(f"sudo mkdir -p {archive_folder}/")
+
+        run(f"sudo tar -xzf /tmp/{filename} -C {archive_folder}/")
 
         run(f"sudo rm /tmp/{filename}")
 

@@ -9,8 +9,8 @@ import os
 
 
 env.hosts = ['54.160.81.105', '34.227.90.3']
-#env.user = 'ubuntu'
-#env.key = '~/.ssh/id_rsa'
+env.user = 'ubuntu'
+env.key = '~/.ssh/id_rsa'
 
 
 def do_deploy(archive_path):
@@ -20,12 +20,10 @@ def do_deploy(archive_path):
     if not os.path.exists(archive_path):
         return False
 
+    filename = os.path.basename(archive_path)
+    archive_folder = f"/data/web_static/releases/{filename.split('.')[0]}"
     try:
         put(archive_path, "/tmp/")
-
-        filename = os.path.basename(archive_path)
-
-        archive_folder = f"/data/web_static/releases/{filename.split('.')[0]}"
 
         run(f"sudo rm -rf {archive_folder}/")
 

@@ -27,23 +27,23 @@ def do_deploy(archive_path):
 
         archive_folder = f"/data/web_static/releases/{filename.split('.')[0]}"
 
-        run(f"rm -rf {archive_folder}/")
+        run(f"sudo rm -rf {archive_folder}/")
 
-        run(f"mkdir -p {archive_folder}/")
+        run(f"sudo mkdir -p {archive_folder}/")
 
-        run(f"tar -xzf /tmp/{filename} -C {archive_folder}/")
+        run(f"sudo tar -xzf /tmp/{filename} -C {archive_folder}/")
 
-        run(f"rm /tmp/{filename}")
+        run(f"sudo rm /tmp/{filename}")
 
-        run(f"mv {archive_folder}/web_static/* {archive_folder}/")
+        run(f"sudo mv {archive_folder}/web_static/* {archive_folder}")
 
-        run(f"rm -rf {archive_folder}/web_static")
+        run(f"sudo rm -rf {archive_folder}/web_static")
 
-        run("rm -rf /data/web_static/current")
+        run("sudo rm -rf /data/web_static/current")
 
-        run(f"ln -s {archive_folder}/ /data/web_static/current")
+        run(f"sudo ln -s {archive_folder}/ /data/web_static/current")
 
         print("New version deployed!")
         return True
-    except Exception as e:
+    except Exception:
         return False

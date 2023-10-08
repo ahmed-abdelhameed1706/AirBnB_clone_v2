@@ -17,7 +17,7 @@ def do_pack():
     local("sudo mkdir -p versions")
     archive_path = local(f"sudo tar -cvzf versions/{filename} web_static")
 
-    if archive_path:
+    if archive_path.succeeded:
         return archive_path
     else:
         return None

@@ -23,7 +23,7 @@ def do_pack():
     local("sudo mkdir -p versions")
     archive_path = local(f"sudo tar -cvzf versions/{filename} web_static")
 
-    if archive_path:
+    if archive_path.succeeded:
         return archive_path
     else:
         return None
@@ -53,7 +53,7 @@ def do_deploy(archive_path):
 
         run(f"sudo rm -rf {archive_folder}/web_static")
 
-        run("sudo rm -rf /data/web_static/current")
+        run(f"sudo rm -rf /data/web_static/current")
 
         run(f"sudo ln -s {archive_folder}/ /data/web_static/current")
 

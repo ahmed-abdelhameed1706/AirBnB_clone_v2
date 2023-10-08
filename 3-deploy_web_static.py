@@ -19,12 +19,12 @@ def do_pack():
     function to pack the web_static folder
     """
     time = datetime.now().strftime("%Y%m%d%H%M%S")
-    filename = f"web_static_{time}.tgz"
     local("sudo mkdir -p versions")
-    archive_path = local(f"sudo tar -cvzf versions/{filename} web_static")
+    filename = f"versions/web_static_{time}.tgz"
+    archive_path = local(f"sudo tar -cvzf {filename} web_static")
 
     if archive_path.succeeded:
-        return archive_path
+        return filename
     else:
         return None
 
@@ -41,9 +41,9 @@ def do_deploy(archive_path):
     try:
         put(archive_path, "/tmp/")
 
-        run(f"sudo rm -rf {archive_folder}/")
+        run(f"sudo rm -rf {archive_folder}")
 
-        run(f"sudo mkdir -p {archive_folder}/")
+        run(f"sudo mkdir -p {archive_folder}")
 
         run(f"sudo tar -xzf /tmp/{filename} -C {archive_folder}/")
 
@@ -70,6 +70,7 @@ def deploy():
     pack = do_pack()
 
     if pack is None:
+        print("path doesnt exist")
         return False
 
     deployment_status = do_deploy(pack)

@@ -25,7 +25,7 @@ def do_deploy(archive_path):
 
         filename = os.path.basename(archive_path)
 
-        archive_folder = f"/data/web_static/releases/{filename[:-4]}"
+        archive_folder = f"/data/web_static/releases/{filename.split('.')[0]}"
 
         run(f"sudo mkdir -p {archive_folder}")
 
@@ -33,9 +33,13 @@ def do_deploy(archive_path):
 
         run(f"sudo rm /tmp/{filename}")
 
+        run(f"sudo mv -f {archive_folder}/web_static/* {archive_folder}/")
+
+        run(f"sudo rm -rf {archive_folder}/web_static")
+
         run("sudo rm -rf /data/web_static/current")
 
-        run(f"sudo ln -s /data/web_static/current {archive_folder}")
+        run(f"sudo ln -s {archive_folder} /data/web_static/current")
 
         return True
     except Exception as e:

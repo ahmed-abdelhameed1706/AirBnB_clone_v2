@@ -35,7 +35,7 @@ def do_deploy(archive_path):
 
         run(f"sudo rm /tmp/{filename}")
 
-        run(f"sudo mv -f {archive_folder}/web_static/* {archive_folder}/")
+        run(f"sudo mv {archive_folder}/web_static/* {archive_folder}/")
 
         run(f"sudo rm -rf {archive_folder}/web_static")
 

@@ -28,6 +28,7 @@ def do_pack():
     else:
         return None
 
+
 def do_deploy(archive_path):
     """
     function to deploy the files to the servers
@@ -61,6 +62,7 @@ def do_deploy(archive_path):
     except Exception:
         return False
 
+
 def deploy():
     """
     deployment function for web servers
@@ -72,4 +74,3 @@ def deploy():
 
     deployment_status = do_deploy(pack)
     return deployment_status
-

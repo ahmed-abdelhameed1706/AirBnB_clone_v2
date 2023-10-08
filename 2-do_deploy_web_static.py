@@ -43,6 +43,7 @@ def do_deploy(archive_path):
 
         run(f"sudo ln -s {archive_folder}/ /data/web_static/current")
 
+        print("New version deployed!")
         return True
     except Exception as e:
         return False

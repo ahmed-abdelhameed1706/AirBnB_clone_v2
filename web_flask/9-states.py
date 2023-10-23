@@ -23,9 +23,14 @@ def states(id=None):
     """
     renders a page with all states
     """
+    id_found = False
     db_type = os.environ.get('HBNB_TYPE_STORAGE')
     states = list(storage.all(State).values())
-    return render_template('9-states.html', states=states, id=id, db=db_type)
+    for state in states:
+        if state.id == id:
+            id_found = True
+    return render_template('9-states.html', states=states, id=id, db=db_type,
+                           id_found=id_found)
 
 
 if __name__ == '__main__':
